@@ -1,0 +1,477 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap");
+:root {
+  --width: 90px;
+  --bodyBackground: #f7f7ff;
+  --portfolioMinHeight: 532px;
+  --portfolio-background: #fefefe;
+  --menu-background: #14fff7;
+  --menu-foreground: #0a0f0d;
+  --menu-hover: #f1f1f1;
+  --subtitle-color: #333333;
+  --info-color: #999999;
+  --violet: #651fff;
+  --pink: #f50057;
+  --gray: #757575;
+}
+
+body {
+  background-color: var(--bodyBackground);
+  font-family: 'Poppins', sans-serif;
+}
+
+.portfolio {
+  min-height: var(--portfolioMinHeight);
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+/*Menu*/
+.portfolio .menu {
+  max-width: var(--width);
+  width: var(--width);
+  background-color: var(--portfolio-background);
+}
+
+.portfolio .menu ul {
+  margin: 0;
+  padding: 0;
+}
+
+.portfolio .menu ul a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: var(--menu-background);
+  color: var(--menu-foreground);
+  text-transform: capitalize;
+}
+
+.portfolio .menu ul a.active,
+.portfolio .menu ul a:hover {
+  background-color: var(--menu-hover);
+}
+
+.portfolio .menu ul a .icon {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  height: 30px;
+  width: 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 20px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+/*content*/
+.portfolio .content {
+  position: relative;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 10px auto;
+  background-color: var(--portfolio-background);
+  -webkit-transition: all ease 1s;
+  transition: all ease 1s;
+  overflow: hidden;
+}
+
+.portfolio .content.active {
+  visibility: visible;
+  opacity: 1;
+  -webkit-transform: translateX(0px);
+          transform: translateX(0px);
+  z-index: 10;
+}
+
+.portfolio .content .content-inner {
+  z-index: 10;
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.portfolio .content .content-inner .sub-title {
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--subtitle-color);
+  margin: 10px auto;
+}
+
+.portfolio .content .content-inner .info {
+  color: var(--info-color);
+  text-align: justify;
+  font-size: 14px;
+}
+
+/*portfolio home*/
+#home {
+  background-color: #272635;
+}
+
+.portfolio #home .portfolio-img-container {
+  text-align: center;
+  padding: 10px;
+}
+
+.portfolio #home .portfolio-img-container img {
+  border-radius: 50%;
+  padding: 10px;
+  max-width: 200px;
+  background-color: var(--white);
+}
+
+.portfolio #home .name {
+  text-align: center;
+  text-transform: uppercase;
+  margin-top: 5px;
+  color: var(--white);
+}
+
+.portfolio #home .name h3 {
+  margin-bottom: 0;
+}
+
+.portfolio #home .designation {
+  text-align: center;
+  font-size: 18px;
+  margin: 10px auto;
+  color: var(--white);
+}
+
+.portfolio #home .social-icons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  list-style-type: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+.portfolio #home .social-icon {
+  height: 40px;
+  width: 40px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: auto 10px;
+  border-radius: 50px;
+  text-decoration: none;
+  background-color: var(--menu-background);
+  color: var(--menu-foreground);
+}
+
+.portfolio #home .social-icon:hover {
+  background-color: var(--menu-hover);
+}
+
+.portfolio #home .download-btn {
+  margin: 20px auto;
+  padding: 10px 40px;
+  text-transform: uppercase;
+  border: none;
+  background-color: var(--white);
+  color: var(--menu-foreground);
+  border-radius: 4px;
+}
+
+/*about*/
+#about .personDetails {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#about .personDetails li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 16px auto;
+  font-size: 14px;
+}
+
+#about .personDetails .detailQuestion {
+  color: var(--subtitle-color);
+  margin-right: 4px;
+}
+
+#about .personDetails .detailQuestion .icon {
+  height: 20px;
+  width: 20px;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#about .personDetails .detailAnswer {
+  color: var(--info-color);
+}
+
+#about .skill-container {
+  margin: 20px auto;
+}
+
+#about .skill-container .skill {
+  margin-bottom: 4px;
+}
+
+#about .testimonials-carousel .card .img-container {
+  max-width: 150px;
+  border-radius: 500px;
+  margin: auto;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+#about .testimonials-carousel .card-title {
+  text-align: center;
+}
+
+#about .testimonials-carousel .card-text {
+  font-size: 14px;
+  color: var(--info-color);
+  text-align: center;
+}
+
+#about .moreInfo.card {
+  margin: 10px;
+}
+
+#about .moreInfo .card-title {
+  text-align: center;
+  color: var(--subtitle-color);
+  font-weight: 600;
+}
+
+#about .moreInfo .card-text {
+  text-align: center;
+  font-size: 14px;
+  color: var(--info-color);
+}
+
+/*resume*/
+#resume .sub-heading {
+  margin: 10px auto;
+}
+
+#resume .sub-heading .icon {
+  height: 20px;
+  width: 20px;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-right: 4px;
+}
+
+#resume .timeline {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+#resume .timeline li {
+  position: relative;
+}
+
+#resume .timeline li .line {
+  position: absolute;
+  top: 4px;
+  bottom: 0;
+  left: 8px;
+  width: 0;
+  height: 100%;
+  border-left: 1px solid var(--pink);
+}
+
+#resume .timeline li .line::before {
+  content: '';
+  position: absolute;
+  height: 10px;
+  width: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  left: 0;
+  top: 0px;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  border-radius: 50px;
+  background-color: var(--pink);
+}
+
+#resume .timeline .degree {
+  padding: 0px 0 20px 20px;
+}
+
+#resume .timeline .degree .degree-title {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--violet);
+}
+
+#resume .timeline .degree .degree-duration {
+  font-size: 14px;
+  margin: 4px auto;
+  color: var(--gray);
+  font-weight: 600;
+}
+
+#resume .timeline .degree .degree-description {
+  font-size: 14px;
+  color: var(--info-color);
+  text-align: justify;
+}
+
+#works .img-container {
+  margin: 10px auto;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+#works .img-container img {
+  -webkit-transition: all ease 0.5s;
+  transition: all ease 0.5s;
+}
+
+#works .img-container:hover img {
+  -webkit-transform: scale(1.2) rotate(5deg);
+          transform: scale(1.2) rotate(5deg);
+}
+
+#works .img-container .overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: rgba(101, 31, 255, 0.45);
+  color: var(--white);
+  font-size: 20px;
+  font-weight: 600;
+  text-transform: uppercase;
+  z-index: 2;
+}
+
+#services .card {
+  margin: 10px auto;
+}
+
+#services .card .icon {
+  font-size: 30px;
+  height: 40px;
+  width: 40px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 10px auto;
+  color: var(--violet);
+}
+
+#services .card .card-title {
+  text-align: center;
+  font-weight: 600;
+  color: var(--subtitle-color);
+  margin: 10px auto;
+  text-transform: uppercase;
+}
+
+#services .card .card-text {
+  color: var(--info-color);
+  font-size: 14px;
+  text-align: justify;
+}
+
+#blog .post {
+  margin-bottom: 10px;
+}
+
+#blog .post .card-title {
+  font-weight: 600;
+  color: var(--pink);
+}
+
+#blog .post .card-text {
+  font-size: 14px;
+  color: var(--info-color);
+}
+
+/*********************/
+@media (min-width: 768px) {
+  .portfolio .content {
+    margin: auto;
+    margin-left: var(--width);
+    position: absolute;
+    -webkit-transform: translateX(-10px);
+            transform: translateX(-10px);
+    z-index: 9;
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+/*# sourceMappingURL=style.css.map */
