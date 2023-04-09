@@ -1,0 +1,110 @@
+@font-face {
+    font-family: 'Modernline';
+    src: url('../fonts/modernline.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    height: 100%;
+}
+
+@font-face {
+    font-family: 'Dustart';
+    src: url('../fonts/dustart.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    height: 100%;
+}
+*::-webkit-scrollbar {
+    width: 14px;
+}
+
+*::-webkit-scrollbar-button {
+    display: none;
+}
+
+*::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    border: 4px solid transparent;
+    background-clip: content-box;
+    background-color: #bbbbbb;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background-color: #aaaaaa;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    overflow: overlay;
+    font-family: 'Alice', serif;
+    padding: 0px !important;
+}
+
+.font-estetik {
+    font-family: 'Modernline', serif !important;
+}
+
+.cropper {
+    width: 14rem;
+    height: 14rem;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.cropper>img {
+    display: inline;
+    margin: 0 auto;
+    height: auto;
+    width: 100%;
+}
+
+.quote__text {
+    font-size: 20px;
+    line-height: 1.5;
+    text-align: center;
+    font-style: initial;
+}
+
+.btn-music {
+    position: fixed;
+    bottom: 9vh;
+    right: 2vh;
+    z-index: 1055;
+}
+
+.fcCouple {
+    color: #000;
+    background-color: transparent;
+}
+.maps {
+  width: 100%;
+}
+
+.loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bs-dark);
+    z-index: 1055 !important;
+}
+
+.ucapan {
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
+}
+
+.ucapan::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+}
+
