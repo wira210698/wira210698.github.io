@@ -1,0 +1,721 @@
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Merupakan suatu kehormatan dan kebahagiaan bagi kami, apabila Bapak/Ibu/Saudara/i, berkenan hadir memberikan doa restu kepada kami">
+    <title>Undangan Pernikahan | <div class="nama_pasangan"> Nama Pasangan</div></title>
+
+    <meta property="og:title" content="Undangan Pawiwahan |  Nama Pasangan">
+    <meta property="og:type" content="Website">
+    <meta property="og:image" content="assets/img/thumb.jpg">
+    <meta property="og:url" content="index.html">
+    <meta property="og:site_name" content="Undangan Kini">
+    <meta property="og:description" content="Merupakan suatu kehormatan dan kebahagiaan bagi kami, apabila Bapak/Ibu/Saudara/i, berkenan hadir memberikan doa restu kepada kami">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alice&family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/vendors/bootstrap.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/vendors/slick.css">
+    <link rel="stylesheet" href="assets/css/vendors/magnific-popup.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    
+
+    <script type="text/javascript"></script>
+    <script>
+        const salin = (btn) => {
+            navigator.clipboard.writeText(btn.getAttribute('data-nomer').toString());
+            let tmp = btn.innerHTML;
+            btn.innerHTML = 'Tersalin';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                btn.innerHTML = tmp;
+                btn.disabled = false;
+            }, 1500);
+        };
+        function salinTautan(btn){
+            var nama_undangan = $("input[name='nama_undangan_share']").val(),
+                name_url = nama_undangan.replace(/ /g, "%20"),
+                currentURL = window.location.href;
+                currentURL = currentURL,
+                currentURL = currentURL.replace('?i=1',""),
+                template_text = `
+Om Swastyastu
+Atas Asung Kertha Wara Nugraha Ida Sang Hyang Widhi Wasa/Tuhan Yang Maha Esa kami bermaksud mengundang 
+Bapak/Ibu/Saudara/i ${nama_undangan}
+pada Upacara Manusa Yadnya Pawiwahan (Pernikahan) kami.
+
+📅 Hari : Sabtu, 23 September 202
+🕐 Pukul : 15:00 WITA - Selesai
+📍Lokasi : Kenyeri Garden Shala Kecamatan Klungkung, Kabupaten Klungkung
+
+*Berikut link undangan kami*, untuk info lengkap dari acara bisa kunjungi :
+
+${currentURL+'?untuk='+name_url}
+
+Merupakan suatu kebahagiaan bagi kami apabila Teman-teman / Bapak/Ibu/Saudara/i berkenan untuk hadir dan memberikan doa restu.
+Terima kasih banyak atas perhatiannya.
+
+Om Shanti Shanti Shanti Om
+
+
+                `;
+                
+                navigator.clipboard.writeText(template_text);
+                let tmp = btn.innerHTML;
+                btn.innerHTML = 'Tersalin';
+                btn.disabled = true;
+                $("input[name='nama_undangan_share']").val(" ")
+
+            setTimeout(() => {
+                btn.innerHTML = tmp;
+                btn.disabled = false;
+            }, 1500);
+        }
+        function getData(){
+        $.ajax({
+            type: "GET",
+            url: "read.php",
+            dataType: "json",
+            success: function (data) {
+                var listKomentar = $(".box_ucapan");
+                listKomentar.empty();
+                $(".hadir").html(data.hadi)
+                $(".tidak_hadir").html(data.ragu)
+                $(".masih_ragu").html(data.tidakHadi)
+                $(".total").html(data.tidakHadi+data.ragu+data.hadi)
+                $.each(data.data, function (index, ucapan) {
+                    console.log(ucapan);
+                    var row = `
+                    <div class='row_ucapan'>
+                        <div class="ucapan" id="msgdiv-${ucapan.id}">${ucapan.ucapan}</div>
+                        <div class='quote'></div>
+                        <div class="nama">${ucapan.nama}</div>
+                        <div class="hadir" style="display:inline;">Saya akan ${ucapan.kehadiran}</div>
+                     </div>
+                    `;
+                    listKomentar.append(row);
+                });
+            },
+            error: function () {
+                console.error("Error fetching data.");
+            }
+        });
+    }
+
+        function SubForm() {
+            $("#butsave").attr("disabled", "disabled");
+            var nama = $('#nama').val();
+            var ucapan = $("#ucapan").val();
+            var hadir = $("input[type='radio'][name='kehadiran']:checked").val();
+            console.log(ucapan);
+            console.log(hadir);
+            console.log(nama);
+
+            if (nama != "" && ucapan != "" && hadir != "") {
+                $.ajax({
+                    url: "create.php",
+                    type: "POST",
+                    data: {
+                        nama: nama,
+                        ucapan: ucapan,
+                        kehadiran: hadir
+                    },
+                    cache: false,
+                beforeSend: function(){
+                    $("#showLoading").show();
+                },
+                success: function(dataResult){
+                    var dataResult = JSON.parse(dataResult);
+                    if(dataResult.statusCode==200){
+                        console.log(dataResult);
+                        $("#butsave").removeAttr("disabled");
+                        
+                        $('#showNotif').html('Ucapan kakak sudah tersampaikan');
+                        $('#rsvp-form')[0].reset();
+                        $('#showNotif').fadeIn('slow');
+                        setTimeout(function() {                        
+                            $('#showNotif').fadeOut('slow');
+                        }, 3000); //  1000 = 1detik    
+                        getData();
+                    $("#showLoading").hide();                 
+                    }
+                    else if(dataResult.statusCode==201){
+                    alert("Error occured !");
+                    }
+                    
+                },
+                complete:function(dataResult){
+                    getData();
+                        $("#showLoading").hide();
+                },
+                error: function(){
+                    alert("There was an error :(")
+                }
+            });
+            } else {
+                $('#showError').html('Harap dilengkapi dulu kak');
+                $('#showError').fadeIn('slow');
+                setTimeout(function() {                        
+                    $('#showError').fadeOut('slow');
+                }, 2000); //  1000 = 1detik 
+            }
+            /**/
+        }
+
+        function changeData(){
+            // Get the URL query parameters
+            var urlParams = new URLSearchParams(window.location.search);
+
+            // Retrieve a specific parameter by name
+            var paramName = 'untuk'; // Replace with your parameter name
+            var paramValue = urlParams.get(paramName);
+            
+            if (paramValue) {
+                $("#buttonshare").remove()
+                $(".jumlah_komentar").remove()
+            }
+            var nama_pasangan = "Aryanta & Dyah", 
+                nama_tamu = paramValue? paramValue:"", 
+                nama_mempelai_pria = "I Made Aryanta", 
+                nama_mempelai_wanita = "Kadek Dyah Candra Berliantika Purnamasari, S. Kom", 
+                nama_ortu1_pria = "I Made Darmada", 
+                nama_ortu2_pria = "Ni Ketut Weni", 
+                nama_ortu1_wanita = "I Nengah Sadya", 
+                nama_ortu2_wanita = "Gusti Ayu Putu Mirah Arini", 
+                alamat_pria = "JI. Gunung Batur, Gg. Jempiring, Lingkungan Sengguan", 
+                alamat_wanita = "Jl. Watureggong, Gg. Kenyeri Lingkungan Pegending", 
+                hari = "Sabtu", 
+                tanggal = "23 September 2023", 
+                dateMoment = "2023/09/23", 
+                jam = "Pukul 15.00 Wita-22.00 Wita", 
+                alamat_acara = "Kenyeri Garden Shala Kecamatan Klungkung, Kabupaten Klungkung";
+
+            $(".nama_pasangan").html(nama_pasangan);
+            if (nama_tamu) {
+                $(".nama_tamu_undangan").html(nama_tamu);
+            } else {
+                $(".nama_tamu").hide();
+            }
+            $(".nama_mempelai_pria").html(nama_mempelai_pria);
+            $(".nama_mempelai_wanita").html(nama_mempelai_wanita);
+            $(".nama_ortu1_pria").html(nama_ortu1_pria);
+            $(".nama_ortu2_pria").html(nama_ortu2_pria);
+            $(".nama_ortu1_wanita").html(nama_ortu1_wanita);
+            $(".nama_ortu2_wanita").html(nama_ortu2_wanita);
+            $(".alamat_pria").html(alamat_pria);
+            $(".alamat_wanita").html(alamat_wanita);
+            $(".hari").html(hari);
+            $(".tanggal").html(tanggal);
+            $(".jam").html(jam);
+            $(".alamat_acara").html(alamat_acara);
+        }
+        
+    </script>
+</head>
+
+<body>
+    <!-- MUSIC -->
+    <div id="buttonmusic" class="shadow">
+        <ion-icon name='volume-high-outline'></ion-icon>
+    </div>
+    <div id="buttonshare" class="shadow">
+        <button class="share btn btn-md rounded-circle text-white" style="background-color: #F4A460;" data-toggle="modal" data-target="#copy_data"> <i class="fa fa-share-alt"></i></button>
+    </div>
+    <audio id="player">
+		<source src="assets/music/song.mp3" type="audio/mpeg">
+	</audio>
+    <!-- MUSIC END -->
+
+    <!-- HEADER -->
+    <header>
+        <div class="js-hero-slider">
+            <div class="hero hero--slide1 js-hero-slide d-flex align-items-center justify-content-center">
+                <div class="shape">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
+                		<path class="shape-fill" opacity="0.33" d="M473,67.3c-203.9,88.3-263.1-34-320.3,0C66,119.1,0,59.7,0,59.7V0h1000v59.7 c0,0-62.1,26.1-94.9,29.3c-32.8,3.3-62.8-12.3-75.8-22.1C806,49.6,745.3,8.7,694.9,4.7S492.4,59,473,67.3z"></path>
+                		<path class="shape-fill" opacity="0.66" d="M734,67.3c-45.5,0-77.2-23.2-129.1-39.1c-28.6-8.7-150.3-10.1-254,39.1 s-91.7-34.4-149.2,0C115.7,118.3,0,39.8,0,39.8V0h1000v36.5c0,0-28.2-18.5-92.1-18.5C810.2,18.1,775.7,67.3,734,67.3z"></path>
+                		<path class="shape-fill" d="M766.1,28.9c-200-57.5-266,65.5-395.1,19.5C242,1.8,242,5.4,184.8,20.6C128,35.8,132.3,44.9,89.9,52.5C28.6,63.7,0,0,0,0 h1000c0,0-9.9,40.9-83.6,48.1S829.6,47,766.1,28.9z"></path>
+                	</svg>
+                </div>
+            </div>
+            <div class="hero hero--slide2 js-hero-slide d-flex align-items-center justify-content-center">
+                <div class="shape">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
+                		<path class="shape-fill" opacity="0.33" d="M473,67.3c-203.9,88.3-263.1-34-320.3,0C66,119.1,0,59.7,0,59.7V0h1000v59.7 c0,0-62.1,26.1-94.9,29.3c-32.8,3.3-62.8-12.3-75.8-22.1C806,49.6,745.3,8.7,694.9,4.7S492.4,59,473,67.3z"></path>
+                		<path class="shape-fill" opacity="0.66" d="M734,67.3c-45.5,0-77.2-23.2-129.1-39.1c-28.6-8.7-150.3-10.1-254,39.1 s-91.7-34.4-149.2,0C115.7,118.3,0,39.8,0,39.8V0h1000v36.5c0,0-28.2-18.5-92.1-18.5C810.2,18.1,775.7,67.3,734,67.3z"></path>
+                		<path class="shape-fill" d="M766.1,28.9c-200-57.5-266,65.5-395.1,19.5C242,1.8,242,5.4,184.8,20.6C128,35.8,132.3,44.9,89.9,52.5C28.6,63.7,0,0,0,0 h1000c0,0-9.9,40.9-83.6,48.1S829.6,47,766.1,28.9z"></path>
+                	</svg>
+                </div>
+            </div>
+        </div>
+        <div class="hero-body">
+            <p class="hero_date">The Wedding Of</p>
+            <h1 class="hero_title"><div class="nama_pasangan"> Nama Pasangan</div></h1>
+            <div class="nama_tamu">
+                <p class="paragraph-modal">Kepada</p>
+                <p class="paragraph-modal">Bapak/Ibu/Saudara/i</p>
+                <h2 class="modal-penerima nama_tamu_undangan">
+                    Nama Tamu </h2>
+            </div>
+            <a href="#intro" class="btn btn-md btn-default btn-modal smoothScroll" id="btn-open">Buka Undangan</a>
+        </div>
+    </header>
+    <!-- HEADER END -->
+
+    <!-- MEMPELAI -->
+    <section class="intro" id="intro">
+        <div id="fh5co-gallery" style="background: url('assets/img/vector/wi.jpg'); background-repeat:repeat ">
+            <img class="flower-3-top" src="assets/img/vector/vintopwd.png">
+            
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="cmb-2 cmt-2 text-center heading-title" data-aos="fade-up">Om Swastyastu</h2>
+                        <p class="cmb-5 paragraph text-center" data-aos="fade-up">Atas Asung Kertha Wara Nugraha Ida Sang Hyang Widhi Wasa/Tuhan Yang Maha Esa kami bermaksud mengundang Bapak/Ibu/Saudara/i pada Upacara Manusa Yadnya Pawiwahan (Pernikahan) Putra dan Putri kami.</p>
+                    </div>
+                </div>
+    
+                <div class="row">
+    
+                    <div class="col-sm-6 mempelai">
+                        <div class="mempelai-foto" data-aos="fade-up">
+                            <img class="frame" src="assets/img/profile1.png">
+                        </div>
+    
+                        <br>
+                        <div class="mempelai-nama nama_mempelai_pria" data-aos="fade-up">Nama Mempelai pria</div>
+                        <div class="mempelai-detail" data-aos="fade-up"> Putra Kedua dari pasangan </div>
+                        <div class="mempelai-ortu" data-aos="fade-up"> <div class="nama_ortu1_pria">-</div> <br />&<br /><div class="nama_ortu2_pria">-</div>  </div>
+                        <div class="mempelai-alamat" data-aos="fade-up"> <div class="alamat_pria">-</div><br/><br/>
+                        <div>
+                                <a href="https://www.instagram.com/aryanta_26/">
+                                    <ion-icon name="logo-instagram" class="icon icon--sm icon--black"></ion-icon>
+                                    </a>
+                                </div>
+                        </div>
+                    </div>
+    
+                    <div class="col-sm-6 mempelai">
+                        <div class="mempelai-foto" data-aos="fade-up">
+                            <img class="frame" src="assets/img/profile2.png">
+                        </div>
+                        <br>
+                        <div class="mempelai-nama nama_mempelai_wanita" data-aos="fade-up"> Nama_Mempelai_Wanita</div>
+                        <div class="mempelai-detail" data-aos="fade-up"> Putri Kedua dari pasangan </div>
+                        <div class="mempelai-ortu" data-aos="fade-up"> <div class="nama_ortu1_wanita">-</div> <br />&<br /> <div class="nama_ortu2_wanita">-</div> </div>
+                        <div class="mempelai-alamat" data-aos="fade-up"> <div class="alamat_wanita">-</div><br/><br/>
+                            <div>
+                                <a href="https://www.instagram.com/candraberliantika/">
+                                    <ion-icon name="logo-instagram" class="icon icon--sm icon--black"></ion-icon>
+                                    </a>
+                                </div>
+                            </div>
+                    </div>
+    
+                </div>
+                    <!-- COUNTDOWN -->
+                <div class="row countdown">
+                    <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-2">
+                        <h2 class="cmb-2 text-center heading-title" data-aos="fade-up">Menuju Hari Bahagia</h2>
+                        <ul class="countdown-list js-countdown clearfix" data-aos="fade-up" data-aos-delay="300" data-date="2023/09/23 15:00">
+                            <li class="countdown-list__item">
+                                <span class="js-countdown-days">000</span>
+                                <p>hari</p>
+                            </li>
+                            <li class="countdown-list__item">
+                                <span class="js-countdown-hours">00</span>
+                                <p>jam</p>
+                            </li>
+                            <li class="countdown-list__item">
+                                <span class="js-countdown-minutes">00</span>
+                                <p>menit</p>
+                            </li>
+                            <li class="countdown-list__item">
+                                <span class="js-countdown-seconds">00</span>
+                                <p>detik</p>
+                            </li>
+                        </ul>
+                        <!-- COUNTDOWN END -->
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+            <img class="flower-4-bottom" src="assets/img/vector/vinbtmwd.png"> 
+        </div>
+    </section>
+    <!-- INTRO END -->
+         
+    <!-- QUOTE-->
+    <section class="cbg-grey" style=" opacity: 0.8;" id="quote">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 offset-md-1">
+                    <h3 class="quote__text font-italic" data-aos="fade-up">Ihaiva stam ma vi yaustam, visvam ayur vyasnutam, kridantau putrair naptrbhih, modamanau sve grhe.<br> (Rg Veda X.85.42)<br><br> Wahai pasangan suami-istri, semoga kalian tetap bersatu dan tidak pernah terpisahkan. Semoga kalian mencapai
+                        hidup penuh kebahagiaan, tinggal di rumah yang penuh kegembiraan bersama seluruh keturunanmu.</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- QUOTE END -->
+
+    <!-- LOKASI -->
+    <section class="location js-section" id="location">
+        <!-- Outline -->
+        <div id="fh5co-gallery" style="background: url('assets/img/vector/wi.jpg'); background-repeat:repeat ">
+            <img class="flower-3-top" src="assets/img/vector/vintopwd.png">
+
+            <h2 class="heading-title text-center" data-aos="fade-up">Waktu & Tempat</h2>
+            <div class="container">
+                <div class="row">
+    
+                    <div class="col-md-12 text-center">
+    
+                        <div class="row acara">
+                            <div class="col-md-10 offset-md-1">
+                                <h2 class="acara-head cmt-3 hari" data-aos="fade-up"> - </h2>
+                                <p class="acara-detail tanggal" data-aos="fade-up"> - </p>
+                                <h2 class="acara-head" data-aos="fade-up">Pukul</h2>
+                                <p class="acara-detail jam" data-aos="fade-up"> - WITA - Selesai</p>
+                                <p class="acara-detail" data-aos="fade-up">Bertempat di</p>
+                                <p class="acara-alamat alamat_acara" data-aos="fade-up"> - </p>
+                                <div class="col-md-12 text-center" data-aos="fade-up">
+                                    <a href="https://goo.gl/maps/hAAASnzgQGanG8Jv8" target="_blank">
+                                        <br />
+                                        <button class="btn btn-md btn-default btn-map"> Map Lokasi Acara </button>
+                                    </a>
+                                </div>
+                                <p class="font-italic text-center cmt-3 cmb-2" data-aos="fade-up"> Merupakan suatu kebahagiaan dan kehormatan bagi kami, apabila Bapak/ Ibu/ Saudara/i, berkenan hadir untuk memberikan doa restu.</p>
+                                <p class="font-italic text-center" data-aos="fade-up"> Atas kehadiran dan doa restunya kami ucapkan terimakasih </p>
+                                <h2 class="section-title text-center penutup" data-aos="fade-up">Om Shanti Shanti Shanti Om</h2>
+                                <p class="keluarga cmb-1" data-aos="fade-up">Kami yang berbahagia</p>
+                                <p class="keluarga" data-aos="fade-up">Kel. <div class="nama_ortu1_pria"></div> &amp; <div class="nama_ortu1_wanita"></div> </p>
+                            </div>
+    
+                        </div>
+    
+                    </div>
+                </div>
+            </div>
+            
+            <img class="flower-4-bottom" src="assets/img/vector/vinbtmwd.png"> 
+        </div>
+        <!-- End Outline -->
+    </section>
+    <!-- LOKASI END -->
+
+    <!-- GALERI -->
+    <section class="galeri cbg-grey text-center js-section" id="galeri">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2 class="heading-title text-center cmb-5" data-aos="fade-up">Momen Bahagia</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class=" grid">
+                        <div class="grid-sizer"></div>
+                        <div class="gutter-sizer"></div>
+                        
+                        <div class="grid-item">
+                            <a class="story-popup" href="assets/img/galeri/0.jpg"><img src="assets/img/galeri/0.jpg" class="galeri__img" width="360" alt="story8"/></a>
+                        </div>
+                        <div class="grid-item">
+                            <a class="story-popup" href="assets/img/galeri/6.jpg"><img src="assets/img/galeri/6.jpg" class="galeri__img" alt="story6"/></a>
+                        </div>
+                        <div class="grid-item">
+                            <a class="story-popup" href="assets/img/galeri/1.jpg"><img src="assets/img/galeri/1.jpg" class="galeri__img" alt="story1"/></a>
+                        </div>
+                        <div class="grid-item">
+                            <a class="story-popup" href="assets/img/galeri/2.jpg"><img src="assets/img/galeri/2.jpg" class="galeri__img" alt="story2"/></a>
+                        </div>
+                        <div class="grid-item">
+                            <a class="story-popup" href="assets/img/galeri/3.jpg"><img src="assets/img/galeri/3.jpg" class="galeri__img" alt="story3"/></a>
+                        </div>
+                        <div class="grid-item">
+                            <a class="story-popup" href="assets/img/galeri/4.jpg"><img src="assets/img/galeri/4.jpg" class="galeri__img" alt="story4"/></a>
+                        </div>
+                        <div class="grid-item">
+                            <a class="story-popup" href="assets/img/galeri/5.jpg"><img src="assets/img/galeri/5.jpg" class="galeri__img" alt="story5"/></a>
+                        </div>
+                        <div class="grid-item">
+                            <a class="story-popup" href="assets/img/galeri/7.jpg"><img src="assets/img/galeri/7.jpg" class="galeri__img" alt="story7"/></a>
+                        </div>
+                        <div class="grid-item">
+                            <a class="story-popup" href="assets/img/galeri/8.jpg"><img src="assets/img/galeri/8.jpg" class="galeri__img" alt="story8"/></a>
+                        </div>
+                        <div class="grid-item">
+                            <a class="story-popup" href="assets/img/galeri/9.jpg"><img src="assets/img/galeri/9.jpg" class="galeri__img" alt="story9"/></a>
+                        </div>
+                        <div class="grid-item">
+                            <a class="story-popup" href="assets/img/galeri/10.jpg"><img src="assets/img/galeri/10.jpg" class="galeri__img" alt="story9"/></a>
+                        </div>
+                        <!-- <div class="grid-item">
+                            <a class="story-popup" href="assets/img/galeri/9.jpg"><img src="assets/img/galeri/11.jpg" class="galeri__img" alt="story9"/></a>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- GALERI END -->
+
+    <!-- VIDEO -->
+    <!-- <section class="video text-center cbg-grey js-section" id="video">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    <h2 class="heading-title text-center cmb-5" data-aos="fade-up">Cerita Kami</h2>
+                    <div class="col-md-12">
+                        <video width="100%" controls="" id="videonya">
+            		        <source src="assets/music/video.mp4#t=0.1"  type="video/mp4">
+            		        Your browser does not support HTML5 video.
+            		    </video>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+    <!-- VIDEO END -->
+
+    <!-- UCAPAN -->
+    <section class="text-center js-section" id="rsvp">
+        <div class="container">
+            <div class="row">
+                <div class="container col-md-6 col-sm-12">
+                    <h2 class="heading-title text-center cmb-5" data-aos="fade-up">Mohon Doa Restu</h2>
+                    <form class="rsvp-form js-form" id="rsvp-form" autocomplete="off">
+                        <div class="d-md-flex justify-content-between">
+                            <div class="col-sm-12">
+                                <div class="rsvp-form-field">
+                                    <label for="nama">Masukan namamu</label>
+                                    <input type="text" name="nama" id="nama" required>
+                                </div>
+                                <div class="rsvp-form-field textarea">
+                                    <label for="ucapan">Berikan ucapanmu</label>
+                                    <textarea rows="4" name="ucapan" id="ucapan"></textarea>
+                                </div>
+                                <div class="rsvp-form-field">
+                    
+                                    <label>Kamu akan hadir?</label>
+                                    <div class="radio-wrapper">
+                                        <input type="radio" checked="" id="radio-1" name="kehadiran" value="Hadir" class="kehadiran">
+                                        <label for="radio-1">Hadir</label>
+                                        <input type="radio" id="radio-2" name="kehadiran" value="Tidak Hadir" class="kehadiran">
+                                        <label for="radio-2">Tidak Hadir</label>
+                                        <input type="radio" id="radio-3" name="kehadiran" value="Masih Ragu" class="kehadiran">
+                                        <label for="radio-3">Masih Ragu</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <br>
+                    <div class="col-md-12">
+                        <div style="display:none" id="showLoading" class="text-danger"><img width="40px" src="assets/img/loading.gif">Mengirim!</div>
+                        <div style="display:none" id="showNotif" class="alert alert-success"></div>
+                        <div style="display:none" id="showError" class="alert alert-danger"></div>
+                    </div>
+                    <button type="submit" class="rsvp-form-submit js-submit" onclick='SubForm()'>Kirim Ucapan</button>
+                </div>
+            </div>
+            <div class="row" id='kolom-ucapan'>
+                <div class="col-sm-12">
+                    <ul class="countdown-list js-countdown clearfix" >
+                        <li class="countdown-list__item p-1">
+                            <span class="hadir">0</span> <span> orang</span>
+                            <p>Hadir</p>
+                        </li>
+                        <li class="countdown-list__item p-1 ">
+                            <span class="tidak_hadir">0</span> <span> orang</span>
+                            <p class="text-center">Berhalangan</p>
+                        </li>
+                        <li class="countdown-list__item p-1">
+                            <span class="masih_ragu">0</span> <span> orang</span>
+                            <p>Ragu</p>
+                        </li>
+                        <li class="countdown-list__item p-1">
+                            <span class="total">0</span> <span> orang</span>
+                            <p>Total</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class='col-sm-12' style='margin-top: 50px;'>
+                    <h2 class='heading-title text-center cmb-3' data-aos='zoom-out-up'>Ucapan Doa</h2>
+                   
+                    <div class='scroll col-md-12' data-aos='fade-up'>
+
+                        <div class='box_ucapan'>
+                            <!-- <div class='row_ucapan'>
+                                <div class="ucapan" id="msgdiv-<?php echo $row["id"];?>"</div>
+                                <div class='quote'></div>
+                                <div class="nama"></div>
+                                <div class="hadir">Saya akan <div class="hadir"></div></div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+    <!-- UCAPAN END -->
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="container col-md-8 col-sm-10 protokol">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="text-center">
+                            <h1 class="heading-title">Love Gift</h1>
+                            <p class="mb-1" style="font-size: 0.9rem;">
+                                Tanpa mengurangi rasa hormat, bagi anda yang ingin memberikan tanda kasih untuk kami,
+                                dapat melalui :
+                            </p>
+        
+                            <div class="overflow-x-hidden">
+                                <div class="row justify-content-center">
+                                    <div class="col-12 card-body border rounded-3 shadow p-3 m-3" style="max-width: 25rem;"
+                                        data-aos="fade-down" data-aos-duration="1500">
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2e/BRI_2020.svg"
+                                            class="img-fluid rounded rounded-3" width="150" alt="BCA">
+                                        <p class="card-text mt-3 mb-0" style="font-size: 0.9rem;">
+                                            No. Rekening 011401024466508
+                                        </p>
+                                        <p class="card-text" style="font-size: 0.9rem;">
+                                            a.n I MADE ARYANTA
+                                        </p>
+                                        <button class="btn btn-light btn-sm" data-nomer="011401024466508" onclick="salin(this)">Salin
+                                            No. Rekening</button>
+                                    </div>
+                                    <div class="col-12 card-body border rounded-3 shadow p-3 m-3" style="max-width: 25rem;"
+                                        data-aos="fade-down" data-aos-duration="1500">
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg"
+                                            class="img-fluid rounded rounded-3" width="150" alt="bni">
+                                        <p class="card-text mt-3 mb-0" style="font-size: 0.9rem;">
+                                            No. Rekening 3950539240
+                                        </p>
+                                        <p class="card-text" style="font-size: 0.9rem;">
+                                            a.n KADEK DYAH CANDRA BERLIANTIKA PURNAMASAR
+                                        </p>
+                                        <button class="btn btn-light btn-sm" data-nomer="3950539240" onclick="salin(this)">Salin No. Rekening</button>
+                                    </div>
+        
+                                    <!-- <div class="col-12 card-body border rounded-3 shadow p-3 m-3" style="max-width: 25rem;"
+                                        data-aos="fade-down" data-aos-duration="1500">
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/BANK_BRI_logo.svg/2560px-BANK_BRI_logo.svg.png"
+                                            class="img-fluid rounded rounded-3" width="150" alt="bri">
+                                        <p class="card-text mt-3 mb-0" style="font-size: 0.9rem;">
+                                            No. Rekening 123456789
+                                        </p>
+                                        <p class="card-text" style="font-size: 0.9rem;">
+                                            a.n Lorem ipsum dolor
+                                        </p>
+                                        <button class="btn btn-light btn-sm" data-nomer="123456789" onclick="salin(this)">Salin
+                                            No. Rekening</button>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="text-center">
+                        <h2 class="heading-title">Sampai Jumpa Di Hari Bahagia Kami</h2>
+                        <!-- <br>
+                        <br> -->
+                        <!-- <h2 class="heading-title">Om Shanti Shanti Shanti Om</h2> -->
+                        <ul class="footer__social">
+                            
+                            <li>
+                                <a href="https://wa.me/62859106516083">
+                                    <ion-icon name="logo-whatsapp" class="icon icon--sm icon--black"></ion-icon>
+                                </a>
+                            </li>
+                        </ul>
+                        <p class="footer__copy">Copyright © WIRA FREELANCE GROUP</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- FOOTER END -->
+    <!-- MODAL -->
+    <div class="modal" tabindex="-1"  id="copy_data">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Salin Tautan Undangan</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group mb-3 p-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1">Nama Undangan</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Nama Undangan" aria-label="Username" aria-describedby="basic-addon1" name="nama_undangan_share">
+                  </div>
+            </div>
+            <div class="modal-footer text-center">
+              <button class="btn btn-light btn-sm" style="background-color: #F4A460; color:white;" data-nomer="3950539240" onclick="salinTautan(this)">Salin Tautan Undangan</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+    <!-- END MODAL -->
+
+    <!-- Google Analytics -->
+    <script>
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-193325660-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <!-- End Google Analytics -->
+
+    <script src="assets/js/vendors/jquery-3.3.1.min.js"></script>
+    <script src="assets/js/smoothscroll.js"></script>
+    <script src="assets/js/vendors/bootstrap.min.js"></script>
+    <script src="assets/js/vendors/jquery.countdown.min.js"></script>
+    <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+    <script src="assets/js/vendors/slick.min.js"></script>
+    <script src="assets/js/vendors/jquery.magnific-popup.min.js"></script>
+    <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="assets/js/script.js"></script>
+
+
+
+</body>
+
+</html>
