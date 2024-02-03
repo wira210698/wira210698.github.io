@@ -223,6 +223,71 @@ Om Shanti Shanti Shanti Om
         }
         
     </script>
+    <style>
+        .corner-image {
+            max-width: 30%;
+            height: auto;
+            /* position: absolute; */
+        }
+        .square {
+            position: relative;
+            width: 100%;
+            padding-top: 100%; /* 1:1 Aspect Ratio */
+            overflow: hidden;
+        }
+
+        .square img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* maps */
+
+        #iframeContainer {
+            position: relative;
+            width: 100%;
+            padding-top: 75%; /* 75% maintains a 4:3 aspect ratio (450/600) */
+        }
+
+        #transparentOverlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            pointer-events: none; /* This prevents the overlay from capturing clicks */
+            z-index: 1;
+        }
+
+        #transparentIframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.9;
+            pointer-events: none; /* This prevents the iframe from capturing clicks */
+        }
+
+        #redirectButton {
+            position: absolute;
+            top: 70%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+    </style>
 </head>
 
 <body>
@@ -275,10 +340,15 @@ Om Shanti Shanti Shanti Om
     <!-- HEADER END -->
 
     <!-- MEMPELAI -->
-    <section class="intro" id="intro">
+    <section class="intro py-0" id="intro">
         <div id="fh5co-gallery" style="background: url('assets/img/vector/wi.jpg'); background-repeat:repeat ">
-            <img class="flower-3-top" src="assets/img/vector/vintopwd.png">
             
+            <!-- <img class="flower-3-top" src="assets/img/vector/vintopwd.png"> -->
+            
+            <div class="d-flex justify-content-between">
+                <img class="flower-3-top corner-image top-left" src="assets/img/vector/oraset1.png">
+                <img class="flower-3-top corner-image top-right" src="assets/img/vector/oraset2.png">
+            </div>
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
@@ -350,16 +420,24 @@ Om Shanti Shanti Shanti Om
                         <!-- COUNTDOWN END -->
                     </div>
                 </div>
+                
+               
             </div>
             <br>
             <br>
-            <img class="flower-4-bottom" src="assets/img/vector/vinbtmwd.png"> 
+            <!-- <img class="flower-4-bottom" src="assets/img/vector/vinbtmwd.png">  -->
+        </div>
+        <div class="d-flex justify-content-between">
+            <img class="flower-3-top corner-image " src="assets/img/vector/oraset4.png">
+            <img class="flower-3-top corner-image" src="assets/img/vector/oraset3.png">
         </div>
     </section>
     <!-- INTRO END -->
          
     <!-- QUOTE-->
     <section class="cbg-grey" style=" opacity: 0.8;" id="quote">
+        
+        <img class="flower-4-top" src="assets/img/vector/vintopwd.png">
         <div class="container">
             <div class="row">
                 <div class="col-md-10 offset-md-1">
@@ -368,14 +446,19 @@ Om Shanti Shanti Shanti Om
                 </div>
             </div>
         </div>
+        <img class="flower-4-bottom" src="assets/img/vector/vinbtmwd.png"> 
     </section>
     <!-- QUOTE END -->
 
     <!-- LOKASI -->
-    <section class="location js-section" id="location">
+    <section class="location js-section my-0" id="location">
         <!-- Outline -->
         <div id="fh5co-gallery" style="background: url('assets/img/vector/wi.jpg'); background-repeat:repeat ">
-            <img class="flower-3-top" src="assets/img/vector/vintopwd.png">
+            <div class="d-flex justify-content-between">
+                <img class="flower-3-top corner-image top-left" src="assets/img/vector/oraset1.png">
+                <img class="flower-3-top corner-image top-right" src="assets/img/vector/oraset2.png">
+            </div>
+            <!-- <img class="flower-3-top" src="assets/img/vector/vintopwd.png"> -->
 
             <h2 class="heading-title text-center" data-aos="fade-up">Waktu & Tempat</h2>
             <div class="container">
@@ -391,17 +474,32 @@ Om Shanti Shanti Shanti Om
                                 <p class="acara-detail jam" data-aos="fade-up"> - WITA - Selesai</p>
                                 <p class="acara-detail" data-aos="fade-up">Bertempat di</p>
                                 <p class="acara-alamat alamat_acara" data-aos="fade-up"> - </p>
-                                <div class="col-md-12 text-center" data-aos="fade-up">
-                                    <a href="https://goo.gl/maps/hAAASnzgQGanG8Jv8" target="_blank">
+                                <div class="col-md-12 text-center mb-5 pb-5" data-aos="fade-up">
+
+                                    <div id="iframeContainer" class="my-2 shadow">
+                                        <!-- Transparent overlay -->
+                                        <div id="transparentOverlay"></div>
+                                        
+                                        <!-- Transparent Google Maps iframe -->
+                                        <iframe id="transparentIframe" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d246.61337890003878!2d115.4209197469916!3d-8.517426379227619!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sid!4v1706878227993!5m2!1sen!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                        <!-- Centered button -->
+                                        <button id="redirectButton" onclick="function(){ window.location.href = 'https://maps.app.goo.gl/jaoWfZjbEHXTXkHR6'; }">Buka Lokasi</button>
+                                    </div>
+
+                                    <!-- <a href="https://goo.gl/maps/hAAASnzgQGanG8Jv8" target="_blank">
                                         <br />
                                         <button class="btn btn-md btn-default btn-map"> Map Lokasi Acara </button>
-                                    </a>
+                                    </a> -->
                                 </div>
+                                
+                                <img class="flower-3-top pt-4 cmb-1" src="assets/img/vector/vintopwd.png">
                                 <p class="font-italic text-center cmt-3 cmb-2" data-aos="fade-up"> Merupakan suatu kebahagiaan dan kehormatan bagi kami, apabila Bapak/ Ibu/ Saudara/i, berkenan hadir untuk memberikan doa restu.</p>
                                 <p class="font-italic text-center" data-aos="fade-up"> Atas kehadiran dan doa restunya kami ucapkan terimakasih </p>
-                                <h2 class="section-title text-center penutup" data-aos="fade-up">Om Shanti Shanti Shanti Om</h2>
+                                <!-- <h2 class="section-title text-center penutup" data-aos="fade-up">Om Shanti Shanti Shanti Om</h2> -->
+                                <h2 class="section-title text-center heading-title aos-init aos-animate" data-aos="fade-up">Om Shanti Shanti Shanti Om</h2>
                                 <p class="keluarga cmb-1" data-aos="fade-up">Kami yang berbahagia</p>
-                                <p class="keluarga" data-aos="fade-up">Kel. <div class="nama_ortu1_pria"></div> &amp; <div class="nama_ortu1_wanita"></div> </p>
+                                <p class="keluarga cmb-1" data-aos="fade-up">Kel. <div class="nama_ortu1_pria"></div> &amp; <div class="nama_ortu1_wanita"></div> </p>
+                                <img class="flower-4-bottom pb-4 cmb-1" src="assets/img/vector/vinbtmwd.png"> 
                             </div>
     
                         </div>
@@ -410,7 +508,11 @@ Om Shanti Shanti Shanti Om
                 </div>
             </div>
             
-            <img class="flower-4-bottom" src="assets/img/vector/vinbtmwd.png"> 
+            <!-- <img class="flower-4-bottom" src="assets/img/vector/vinbtmwd.png">  -->
+            <div class="d-flex justify-content-between">
+                <img class="flower-3-top corner-image top-left" src="assets/img/vector/oraset4.png">
+                <img class="flower-3-top corner-image top-right" src="assets/img/vector/oraset3.png">
+            </div>
         </div>
         <!-- End Outline -->
     </section>
@@ -418,6 +520,8 @@ Om Shanti Shanti Shanti Om
 
     <!-- GALERI -->
     <section class="galeri cbg-grey text-center js-section" id="galeri">
+        
+        <img class="flower-3-top" src="assets/img/vector/vintopwd.png">
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
@@ -425,51 +529,150 @@ Om Shanti Shanti Shanti Om
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-12">
-                    <div class=" grid">
-                        <div class="grid-sizer"></div>
-                        <div class="gutter-sizer"></div>
-                        
-                        <div class="grid-item">
-                            <a class="story-popup" href="assets/img/galeri/0.jpg"><img src="assets/img/galeri/0.jpg" class="galeri__img" width="360" alt="story8"/></a>
+
+                <div class="p-0 col-4 col-md-3">
+                    <a class="story-popup" href="assets/img/galeri/DSC04354.JPG">
+                        <div class="square">
+                            <img src="assets/img/galeri/DSC04354.JPG" class="galeri__img img-fluid" alt="story20"/>
                         </div>
-                        <div class="grid-item">
-                            <a class="story-popup" href="assets/img/galeri/6.jpg"><img src="assets/img/galeri/6.jpg" class="galeri__img" alt="story6"/></a>
+                    </a>
+                </div>
+                 <div class="p-0 col-4 col-md-3">
+                    <a class="story-popup" href="assets/img/galeri/DSC04277.JPG">
+                        <div class="square">
+                            <img src="assets/img/galeri/DSC04277.JPG" class="galeri__img img-fluid" alt="story20"/>
                         </div>
-                        <div class="grid-item">
-                            <a class="story-popup" href="assets/img/galeri/1.jpg"><img src="assets/img/galeri/1.jpg" class="galeri__img" alt="story1"/></a>
+                    </a>
+                </div>
+                 <div class="p-0 col-4 col-md-3">
+                    <a class="story-popup" href="assets/img/galeri/DSC04394.JPG">
+                        <div class="square">
+                            <img src="assets/img/galeri/DSC04394.JPG" class="galeri__img img-fluid" alt="story20"/>
                         </div>
-                        <div class="grid-item">
-                            <a class="story-popup" href="assets/img/galeri/2.jpg"><img src="assets/img/galeri/2.jpg" class="galeri__img" alt="story2"/></a>
+                    </a>
+                </div>
+                 <div class="p-0 col-4 col-md-3">
+                    <a class="story-popup" href="assets/img/galeri/DSC04463.JPG">
+                        <div class="square">
+                            <img src="assets/img/galeri/DSC04463.JPG" class="galeri__img img-fluid" alt="story20"/>
                         </div>
-                        <div class="grid-item">
-                            <a class="story-popup" href="assets/img/galeri/3.jpg"><img src="assets/img/galeri/3.jpg" class="galeri__img" alt="story3"/></a>
+                    </a>
+                </div>
+                 <div class="p-0 col-4 col-md-3">
+                    <a class="story-popup" href="assets/img/galeri/DSC04473.JPG">
+                        <div class="square">
+                            <img src="assets/img/galeri/DSC04473.JPG" class="galeri__img img-fluid" alt="story20"/>
                         </div>
-                        <div class="grid-item">
-                            <a class="story-popup" href="assets/img/galeri/4.jpg"><img src="assets/img/galeri/4.jpg" class="galeri__img" alt="story4"/></a>
+                    </a>
+                </div>
+                 <div class="p-0 col-4 col-md-3">
+                    <a class="story-popup" href="assets/img/galeri/DSC04486_dicetak.JPG">
+                        <div class="square">
+                            <img src="assets/img/galeri/DSC04486_dicetak.JPG" class="galeri__img img-fluid" alt="story20"/>
                         </div>
-                        <div class="grid-item">
-                            <a class="story-popup" href="assets/img/galeri/5.jpg"><img src="assets/img/galeri/5.jpg" class="galeri__img" alt="story5"/></a>
+                    </a>
+                </div>
+                 <div class="p-0 col-4 col-md-3">
+                    <a class="story-popup" href="assets/img/galeri/DSC04500.JPG">
+                        <div class="square">
+                            <img src="assets/img/galeri/DSC04500.JPG" class="galeri__img img-fluid" alt="story20"/>
                         </div>
-                        <div class="grid-item">
-                            <a class="story-popup" href="assets/img/galeri/7.jpg"><img src="assets/img/galeri/7.jpg" class="galeri__img" alt="story7"/></a>
+                    </a>
+                </div>
+                 <div class="p-0 col-4 col-md-3">
+                    <a class="story-popup" href="assets/img/galeri/DSC04509.JPG">
+                        <div class="square">
+                            <img src="assets/img/galeri/DSC04509.JPG" class="galeri__img img-fluid" alt="story20"/>
                         </div>
-                        <div class="grid-item">
-                            <a class="story-popup" href="assets/img/galeri/8.jpg"><img src="assets/img/galeri/8.jpg" class="galeri__img" alt="story8"/></a>
+                    </a>
+                </div>
+                 <div class="p-0 col-4 col-md-3">
+                    <a class="story-popup" href="assets/img/galeri/DSC04523.JPG">
+                        <div class="square">
+                            <img src="assets/img/galeri/DSC04523.JPG" class="galeri__img img-fluid" alt="story20"/>
                         </div>
-                        <div class="grid-item">
-                            <a class="story-popup" href="assets/img/galeri/9.jpg"><img src="assets/img/galeri/9.jpg" class="galeri__img" alt="story9"/></a>
+                    </a>
+                </div>
+                 <div class="p-0 col-4 col-md-3">
+                    <a class="story-popup" href="assets/img/galeri/DSC04535.JPG">
+                        <div class="square">
+                            <img src="assets/img/galeri/DSC04535.JPG" class="galeri__img img-fluid" alt="story20"/>
                         </div>
-                        <div class="grid-item">
-                            <a class="story-popup" href="assets/img/galeri/10.jpg"><img src="assets/img/galeri/10.jpg" class="galeri__img" alt="story9"/></a>
+                    </a>
+                </div>
+                 <div class="p-0 col-4 col-md-3">
+                    <a class="story-popup" href="assets/img/galeri/DSC04595.JPG">
+                        <div class="square">
+                            <img src="assets/img/galeri/DSC04595.JPG" class="galeri__img img-fluid" alt="story20"/>
                         </div>
-                        <!-- <div class="grid-item">
-                            <a class="story-popup" href="assets/img/galeri/9.jpg"><img src="assets/img/galeri/11.jpg" class="galeri__img" alt="story9"/></a>
-                        </div> -->
-                    </div>
+                    </a>
+                </div>
+                 <div class="p-0 col-4 col-md-3">
+                    <a class="story-popup" href="assets/img/galeri/DSC04669.JPG">
+                        <div class="square">
+                            <img src="assets/img/galeri/DSC04669.JPG" class="galeri__img img-fluid" alt="story20"/>
+                        </div>
+                    </a>
+                </div>
+                 <div class="p-0 col-4 col-md-3">
+                    <a class="story-popup" href="assets/img/galeri/DSC04688.JPG">
+                        <div class="square">
+                            <img src="assets/img/galeri/DSC04688.JPG" class="galeri__img img-fluid" alt="story20"/>
+                        </div>
+                    </a>
+                </div>
+                 <div class="p-0 col-4 col-md-3">
+                    <a class="story-popup" href="assets/img/galeri/DSC04713.JPG">
+                        <div class="square">
+                            <img src="assets/img/galeri/DSC04713.JPG" class="galeri__img img-fluid" alt="story20"/>
+                        </div>
+                    </a>
+                </div>
+                 <div class="p-0 col-4 col-md-3">
+                    <a class="story-popup" href="assets/img/galeri/DSC04725.JPG">
+                        <div class="square">
+                            <img src="assets/img/galeri/DSC04725.JPG" class="galeri__img img-fluid" alt="story20"/>
+                        </div>
+                    </a>
+                </div>
+                 <div class="p-0 col-4 col-md-3">
+                    <a class="story-popup" href="assets/img/galeri/DSC04733.JPG">
+                        <div class="square">
+                            <img src="assets/img/galeri/DSC04733.JPG" class="galeri__img img-fluid" alt="story20"/>
+                        </div>
+                    </a>
+                </div>
+                 <div class="p-0 col-4 col-md-3">
+                    <a class="story-popup" href="assets/img/galeri/DSC04800.JPG">
+                        <div class="square">
+                            <img src="assets/img/galeri/DSC04800.JPG" class="galeri__img img-fluid" alt="story20"/>
+                        </div>
+                    </a>
+                </div>
+                 <div class="p-0 col-4 col-md-3">
+                    <a class="story-popup" href="assets/img/galeri/DSC04813.JPG">
+                        <div class="square">
+                            <img src="assets/img/galeri/DSC04813.JPG" class="galeri__img img-fluid" alt="story20"/>
+                        </div>
+                    </a>
+                </div>
+                 <div class="p-0 col-4 col-md-3">
+                    <a class="story-popup" href="assets/img/galeri/DSC04833.JPG">
+                        <div class="square">
+                            <img src="assets/img/galeri/DSC04833.JPG" class="galeri__img img-fluid" alt="story20"/>
+                        </div>
+                    </a>
+                </div>
+                 <div class="p-0 col-4 col-md-3">
+                    <a class="story-popup" href="assets/img/galeri/DSC04860.JPG">
+                        <div class="square">
+                            <img src="assets/img/galeri/DSC04860.JPG" class="galeri__img img-fluid" alt="story20"/>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
+        <img class="flower-4-bottom" src="assets/img/vector/vinbtmwd.png"> 
     </section>
     <!-- GALERI END -->
 
@@ -492,7 +695,11 @@ Om Shanti Shanti Shanti Om
     <!-- VIDEO END -->
 
     <!-- UCAPAN -->
-    <section class="text-center js-section" id="rsvp">
+    <section class="text-center js-section py-0" id="rsvp">
+        <div class="d-flex justify-content-between">
+            <img class="flower-3-top corner-image top-left" src="assets/img/vector/oraset1.png">
+            <img class="flower-3-top corner-image top-right" src="assets/img/vector/oraset2.png">
+        </div>
         <div class="container">
             <div class="row">
                 <div class="container col-md-6 col-sm-12">
@@ -573,7 +780,7 @@ Om Shanti Shanti Shanti Om
     <!-- UCAPAN END -->
 
     <!-- FOOTER -->
-    <footer class="footer">
+    <footer class="footer  py-0">
         <div class="container">
             <div class="row">
                 <div class="container col-md-8 col-sm-10 protokol">
@@ -648,10 +855,15 @@ Om Shanti Shanti Shanti Om
                                 </a>
                             </li>
                         </ul>
-                        <p class="footer__copy">Copyright © WIRA FREELANCE GROUP</p>
+                        <p class="footer__copy">Copyright © NATA FREELANCE GROUP</p>
                     </div>
                 </div>
             </div>
+        </div>
+        
+        <div class="d-flex justify-content-between">
+            <img class="flower-3-top corner-image top-left" src="assets/img/vector/oraset4.png">
+            <img class="flower-3-top corner-image top-right" src="assets/img/vector/oraset3.png">
         </div>
     </footer>
     <!-- FOOTER END -->
