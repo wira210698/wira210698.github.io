@@ -90,9 +90,8 @@ Om Shanti Shanti Shanti Om
                 currentURL = window.location.href;
                 currentURL = currentURL,
                 currentURL = currentURL.replace('?i=1',""),
-                template_text_wa = `Om%20Swastyastu%0AAtas%20Asung%20Kertha%20Wara%20Nugraha%20Ida%20Sang%20Hyang%20Widhi%20Wasa/Tuhan%20Yang%20Maha%20Esa%20kami%20bermaksud%20mengundang%20%0ABapak/Ibu/Saudara/i%20${nama_undangan}%0Apada%20Upacara%20Manusa%20Yadnya%20Pawiwahan%20(Pernikahan)%20kami.%0A%0A%20Hari%20:%20Sabtu,%2018%20Maret%202024%0A%20Pukul%20:%2016:00%20WITA%20-%2022:00%20WITA%0ALokasi%20:%20Desa%20Lokasari,%20Dusun%20Lebu%20Anyar,%20Kec.Sidemen,%20Kab.%20Karangasem,%20Bali%0A%0A*Berikut%20link%20undangan%20kami*,%20untuk%20info%20lengkap%20dari%20acara%20bisa%20kunjungi%20:%0A%0A${currentURL+'?untuk='+name_url}%0A%0AMerupakan%20suatu%20kebahagiaan%20bagi%20kami%20apabila%20Teman-teman%20/%20Bapak/Ibu/Saudara/i%20berkenan%20untuk%20hadir%20dan%20memberikan%20doa%20restu.%0ATerima%20kasih%20banyak%20atas%20perhatiannya.%0A%0AOm%20Shanti%20Shanti%20Shanti%20Om`;
-                
-                
+                template_text_wa = `Om%20Swastyastu%0AAtas%20Asung%20Kertha%20Wara%20Nugraha%20Ida%20Sang%20Hyang%20Widhi%20Wasa/Tuhan%20Yang%20Maha%20Esa%20kami%20bermaksud%20mengundang%20%0ABapak/Ibu/Saudara/i%20'${nama_undangan}'%0Apada%20Upacara%20Manusa%20Yadnya%20Pawiwahan%20(Pernikahan)%20kami.%0A%0A%20Hari%20:%20Sabtu,%2018%20Maret%202024%0A%20Pukul%20:%2016:00%20WITA%20-%2022:00%20WITA%0ALokasi%20:%20Desa%20Lokasari,%20Dusun%20Lebu%20Anyar,%20Kec.Sidemen,%20Kab.%20Karangasem,%20Bali%0A%0A*Berikut%20link%20undangan%20kami*,%20untuk%20info%20lengkap%20dari%20acara%20bisa%20kunjungi%20:%0A%0A${currentURL+'?untuk='+name_url}%0A%0AMerupakan%20suatu%20kebahagiaan%20bagi%20kami%20apabila%20Teman-teman%20/%20Bapak/Ibu/Saudara/i%20berkenan%20untuk%20hadir%20dan%20memberikan%20doa%20restu.%0ATerima%20kasih%20banyak%20atas%20perhatiannya.%0A%0AOm%20Shanti%20Shanti%20Shanti%20Om`;
+
                 window.open('https://wa.me/send/?text='+template_text_wa,'_blank');
                 $("input[name='nama_undangan_share']").val(" ")
 
