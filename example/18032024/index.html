@@ -71,11 +71,29 @@ Om Shanti Shanti Shanti Om
 
 
                 `;
+                template_text_wa = `Om%20Swastyastu%0AAtas%20Asung%20Kertha%20Wara%20Nugraha%20Ida%20Sang%20Hyang%20Widhi%20Wasa/Tuhan%20Yang%20Maha%20Esa%20kami%20bermaksud%20mengundang%20%0ABapak/Ibu/Saudara/i%20${nama_undangan}%0Apada%20Upacara%20Manusa%20Yadnya%20Pawiwahan%20(Pernikahan)%20kami.%0A%0A📅%20Hari%20:%20Sabtu,%2018%20Maret%202024%0A🕐%20Pukul%20:%2016:00%20WITA%20-%2022:00%20WITA%0A📍Lokasi%20:%20Desa%20Lokasari,%20Dusun%20Lebu%20Anyar,%20Kec.Sidemen,%20Kab.%20Karangasem,%20Bali%0A%0A*Berikut%20link%20undangan%20kami*,%20untuk%20info%20lengkap%20dari%20acara%20bisa%20kunjungi%20:%0A%0A${currentURL+'?untuk='+name_url}%0A%0AMerupakan%20suatu%20kebahagiaan%20bagi%20kami%20apabila%20Teman-teman%20/%20Bapak/Ibu/Saudara/i%20berkenan%20untuk%20hadir%20dan%20memberikan%20doa%20restu.%0ATerima%20kasih%20banyak%20atas%20perhatiannya.%0A%0AOm%20Shanti%20Shanti%20Shanti%20Om`;
                 
                 navigator.clipboard.writeText(template_text);
                 let tmp = btn.innerHTML;
                 btn.innerHTML = 'Tersalin';
                 btn.disabled = true;
+                $("input[name='nama_undangan_share']").val(" ")
+
+            setTimeout(() => {
+                btn.innerHTML = tmp;
+                btn.disabled = false;
+            }, 1500);
+        }
+        function kirimViaWA(btn){
+            var nama_undangan = $("input[name='nama_undangan_share']").val(),
+                name_url = nama_undangan.replace(/ /g, "%20"),
+                currentURL = window.location.href;
+                currentURL = currentURL,
+                currentURL = currentURL.replace('?i=1',""),
+                template_text_wa = `Om%20Swastyastu%0AAtas%20Asung%20Kertha%20Wara%20Nugraha%20Ida%20Sang%20Hyang%20Widhi%20Wasa/Tuhan%20Yang%20Maha%20Esa%20kami%20bermaksud%20mengundang%20%0ABapak/Ibu/Saudara/i%20${nama_undangan}%0Apada%20Upacara%20Manusa%20Yadnya%20Pawiwahan%20(Pernikahan)%20kami.%0A%0A%20Hari%20:%20Sabtu,%2018%20Maret%202024%0A%20Pukul%20:%2016:00%20WITA%20-%2022:00%20WITA%0ALokasi%20:%20Desa%20Lokasari,%20Dusun%20Lebu%20Anyar,%20Kec.Sidemen,%20Kab.%20Karangasem,%20Bali%0A%0A*Berikut%20link%20undangan%20kami*,%20untuk%20info%20lengkap%20dari%20acara%20bisa%20kunjungi%20:%0A%0A${currentURL+'?untuk='+name_url}%0A%0AMerupakan%20suatu%20kebahagiaan%20bagi%20kami%20apabila%20Teman-teman%20/%20Bapak/Ibu/Saudara/i%20berkenan%20untuk%20hadir%20dan%20memberikan%20doa%20restu.%0ATerima%20kasih%20banyak%20atas%20perhatiannya.%0A%0AOm%20Shanti%20Shanti%20Shanti%20Om`;
+                
+                
+                window.open('https://wa.me/send/?text='+template_text_wa,'_blank');
                 $("input[name='nama_undangan_share']").val(" ")
 
             setTimeout(() => {
@@ -884,7 +902,7 @@ Om Shanti Shanti Shanti Om
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Salin Tautan Undangan</h5>
+              <h5 class="modal-title">Kirim Tautan Undangan</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -894,11 +912,12 @@ Om Shanti Shanti Shanti Om
                     <div class="input-group-prepend">
                       <span class="input-group-text" id="basic-addon1">Nama Undangan</span>
                     </div>
-                    <input type="text" class="form-control" placeholder="Nama Undangan" aria-label="Username" aria-describedby="basic-addon1" name="nama_undangan_share">
+                    <input type="text" class="form-control" placeholder="Nama Undangan" aria-label="Username" aria-describedby="basic-addon1" name="nama_undangan_share" required>
                   </div>
             </div>
             <div class="modal-footer text-center">
-              <button class="btn btn-light btn-sm" style="background-color: #F4A460; color:white;" data-nomer="3950539240" onclick="salinTautan(this)">Salin Tautan Undangan</button>
+              <!-- <button class="btn btn-light btn-sm" style="background-color: #F4A460; color:white;" data-nomer="3950539240" onclick="salinTautan(this)">Salin Tautan Undangan</button> -->
+              <button class="btn btn-light btn-sm" style="background-color: #F4A460; color:white;" data-nomer="3950539240" onclick="kirimViaWA(this)"><ion-icon name="logo-whatsapp" class="icon icon--sm icon--black"></ion-icon>Kirim Via WhatsApp</button>
             </div>
           </div>
         </div>
