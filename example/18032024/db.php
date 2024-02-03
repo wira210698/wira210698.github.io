@@ -11,17 +11,17 @@
 class database
 {
     
-    public $user ='root';
-    public $db_name ='comment';
-    public $password ='';
-    public $server ="localhost";
-    public $port ='3306';
-    
-    // public $user ='unaux_34083372';
-    // public $db_name ='unaux_34083372_comment';
-    // public $password ='w1r4n4t4';
-    // public $server ="sql310.unaux.com";
+    // public $user ='root';
+    // public $db_name ='comment';
+    // public $password ='';
+    // public $server ="localhost";
     // public $port ='3306';
+    
+    public $user ='unaux_34083372';
+    public $db_name ='unaux_34083372_comment';
+    public $password ='w1r4n4t4';
+    public $server ="sql310.unaux.com";
+    public $port ='3306';
     public $koneksi;
     public $status;
     
